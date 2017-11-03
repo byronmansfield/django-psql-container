@@ -1,0 +1,27 @@
+language: python
+
+python:
+  - "3.6"
+
+before_install:
+  - cd app/
+
+env:
+  global:
+    - SECRET_KEY="YOUR SECRET_KEY IN HERE BETWEEN THE QUOTES"
+    - DB_NAME=django-test
+    - DB_USER=postgres
+    - DB_PASS=""
+    - DB_HOST=localhost
+    - DB_PORT="5432"
+
+services:
+  - postgresql
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - psql -c 'create database django-test;' -U postgres
+
+script: python manage.py test
